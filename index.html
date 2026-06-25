@@ -18,10 +18,15 @@ header{background:var(--primary);padding:0 24px;display:flex;align-items:center;
 .logo-img{width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.25)}
 .hinfo h1{font-size:16px;font-weight:700;color:#fff;line-height:1.2}
 .hinfo p{font-size:11px;color:rgba(255,255,255,.6);margin-top:1px}
-nav{background:var(--pd);padding:0 24px;display:flex;border-bottom:1px solid rgba(255,255,255,.06)}
-.tab{background:none;border:none;color:rgba(255,255,255,.5);padding:11px 18px;cursor:pointer;font-size:13.5px;font-weight:500;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;gap:8px;white-space:nowrap}
+nav{background:var(--pd);padding:0 16px;display:flex;border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.tab{background:none;border:none;color:rgba(255,255,255,.5);padding:11px 16px;cursor:pointer;font-size:13px;font-weight:500;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0}
 .tab:hover{color:rgba(255,255,255,.85)}.tab.on{color:#fff;border-bottom-color:var(--accent)}
 .tab svg{opacity:.7;flex-shrink:0}.tab.on svg{opacity:1}
+.tab .tlong{display:inline}
+.tab .tshort{display:none}
+@media(max-width:520px){.tab{padding:10px 12px;font-size:12px;gap:5px}.tab .tlong{display:none}.tab .tshort{display:inline}}
+@media(max-width:340px){.tab .tshort{display:none}}
 
 /* SCREENS */
 .scr{display:none}.scr.on{display:block}
@@ -189,15 +194,15 @@ textarea{min-height:82px;resize:vertical}
   <nav>
     <button class="tab on" id="tab-form" onclick="showScr('form',this)">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      Pesquisa de Desligamento
+      <span class="tlong">Pesquisa de Desligamento</span><span class="tshort">Pesquisa</span>
     </button>
     <button class="tab" id="tab-dash" onclick="requestDash(this)">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Dashboard de Insights
+      <span class="tlong">Dashboard de Insights</span><span class="tshort">Dashboard</span>
     </button>
     <button class="tab" id="tab-data" onclick="requestAdmin('data',this)">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-      Banco de Respostas
+      <span class="tlong">Banco de Respostas</span><span class="tshort">Respostas</span>
     </button>
   </nav>
 </div>
