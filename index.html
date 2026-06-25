@@ -130,17 +130,6 @@ textarea{min-height:82px;resize:vertical}
 .dash-hdr h2{font-size:22px;font-weight:800;color:var(--primary)}
 .dash-hdr p{font-size:13px;color:var(--muted);margin-top:2px}
 .bout{background:#fff;color:var(--primary);border:1.5px solid var(--border);padding:9px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-/* TABLE */
-#resp-table tbody tr:nth-child(even){background:#f7f9fc}
-#resp-table tbody tr:hover{background:#eef2f7}
-#resp-table tbody td{padding:10px 14px;border-bottom:1px solid #eef2f7;vertical-align:middle}
-.tipo-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.tipo-vol{background:#d4f0de;color:#1d6e3a}.tipo-inv{background:#fde8e8;color:#8b2222}
-.tipo-acor{background:#fef3d0;color:#92580a}.tipo-cont{background:#e8f0fd;color:#1a3a5c}
-.sc-pill{display:inline-block;width:30px;height:30px;border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sc-ok{background:#d4f0de;color:#1d6e3a}.sc-warn{background:#fef3d0;color:#92580a}.sc-bad{background:#fde8e8;color:#8b2222}.sc-na{background:#eef2f7;color:#607080}
-.nps-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700}
-.nps-prom{background:#d4f0de;color:#1d6e3a}.nps-pass{background:#fef3d0;color:#92580a}.nps-detr{background:#fde8e8;color:#8b2222}
 
 
 /* PASSWORD MODAL */
@@ -155,10 +144,27 @@ textarea{min-height:82px;resize:vertical}
 .modal-cancel{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-top:12px;display:block;width:100%}
 .modal-err{font-size:12px;color:var(--dng);margin-bottom:8px;min-height:16px}
 
+/* Data screen uses full viewport width */
+#scr-data main{max-width:none;padding-left:24px;padding-right:24px}
+#scr-data .card{padding:0;overflow:hidden}
+#scr-data #dt-load,#scr-data #dt-empty{padding:60px 20px}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+#resp-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+#resp-table th{padding:11px 10px;white-space:normal;word-break:break-word;font-size:12px;font-weight:700;background:var(--primary);color:#fff;border-right:1px solid rgba(255,255,255,.12);vertical-align:middle;text-align:left}
+#resp-table th:last-child{border-right:none}
+#resp-table tbody td{padding:9px 10px;border-bottom:1px solid #eef2f7;vertical-align:middle;word-break:break-word}
+#resp-table tbody tr:nth-child(even){background:#f7f9fc}
+#resp-table tbody tr:hover{background:#eef4ff}
+.tipo-badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.tipo-vol{background:#d4f0de;color:#1d6e3a}.tipo-inv{background:#fde8e8;color:#8b2222}
+.tipo-acor{background:#fef3d0;color:#92580a}.tipo-cont{background:#e8f0fd;color:#1a3a5c}
+.nps-pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap}
+.nps-prom{background:#d4f0de;color:#1d6e3a}.nps-pass{background:#fef3d0;color:#92580a}.nps-detr{background:#fde8e8;color:#8b2222}
 @media(max-width:650px){
   .krow{grid-template-columns:1fr 1fr}.cgrid{grid-template-columns:1fr}
   .opts.c2,.opts.c3{grid-template-columns:1fr}.g2{grid-template-columns:1fr}
   header{padding:0 16px;gap:10px}.hinfo h1{font-size:14px}
+  #scr-data main{padding-left:12px;padding-right:12px}
 }
 </style>
 </head>
@@ -452,15 +458,15 @@ textarea{min-height:82px;resize:vertical}
 <!-- TELA 3: BANCO DE RESPOSTAS -->
 <div id="scr-data" class="scr">
 <main class="wide">
-  <div class="dash-hdr">
+  <div class="dash-hdr" style="align-items:center">
     <div>
       <h2>Banco de Respostas</h2>
       <p id="data-sub">Registros individuais de cada pesquisa respondida</p>
     </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <input type="text" id="data-search" placeholder="🔍 Buscar por nome, cargo ou departamento..." style="padding:9px 13px;font-size:13px;border-radius:8px;border:1.5px solid var(--border);min-width:280px" oninput="filterTable()">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <input type="text" id="data-search" placeholder="🔍 Buscar por nome, cargo ou departamento..." style="padding:9px 13px;font-size:13px;border-radius:8px;border:1.5px solid var(--border);width:300px" oninput="filterTable()">
       <button class="bout" onclick="loadData()">🔄 Atualizar</button>
-      <button id="btn-xlsx" onclick="exportXLSX()" style="background:var(--ok);color:#fff;border:none;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px">
+      <button id="btn-xlsx" onclick="exportXLSX()" style="background:var(--ok);color:#fff;border:none;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Baixar XLSX
       </button>
@@ -476,31 +482,48 @@ textarea{min-height:82px;resize:vertical}
 
   <div id="dt-main" style="display:none">
     <div class="card" style="padding:0;overflow:hidden">
-      <div style="overflow-x:auto">
-        <table id="resp-table" style="width:100%;border-collapse:collapse;font-size:13px">
+      <div class="tbl-wrap">
+        <table id="resp-table">
+          <colgroup>
+            <col style="width:3%">   <!-- # -->
+            <col style="width:7%">   <!-- Data -->
+            <col style="width:11%">  <!-- Nome -->
+            <col style="width:9%">   <!-- Cargo -->
+            <col style="width:9%">   <!-- Depto -->
+            <col style="width:7%">   <!-- Tempo -->
+            <col style="width:7%">   <!-- Tipo -->
+            <col style="width:17%">  <!-- Motivos -->
+            <col style="width:5%">   <!-- Liderança -->
+            <col style="width:5%">   <!-- Clima -->
+            <col style="width:5%">   <!-- Remun. -->
+            <col style="width:5%">   <!-- Desenv. -->
+            <col style="width:5%">   <!-- Comun. -->
+            <col style="width:4%">   <!-- NPS -->
+            <col style="width:7%">   <!-- Retorno -->
+          </colgroup>
           <thead>
-            <tr style="background:var(--primary);color:#fff;text-align:left">
-              <th style="padding:12px 14px;white-space:nowrap;position:sticky;left:0;background:var(--primary);z-index:2">#</th>
-              <th style="padding:12px 14px;white-space:nowrap">Data</th>
-              <th style="padding:12px 14px;white-space:nowrap">Nome</th>
-              <th style="padding:12px 14px;white-space:nowrap">Cargo</th>
-              <th style="padding:12px 14px;white-space:nowrap">Departamento</th>
-              <th style="padding:12px 14px;white-space:nowrap">Tempo</th>
-              <th style="padding:12px 14px;white-space:nowrap">Tipo</th>
-              <th style="padding:12px 14px;white-space:nowrap">Principais Motivos</th>
-              <th style="padding:12px 14px;white-space:nowrap;text-align:center">Liderança</th>
-              <th style="padding:12px 14px;white-space:nowrap;text-align:center">Clima</th>
-              <th style="padding:12px 14px;white-space:nowrap;text-align:center">Remuneração</th>
-              <th style="padding:12px 14px;white-space:nowrap;text-align:center">Desenvolvimento</th>
-              <th style="padding:12px 14px;white-space:nowrap;text-align:center">Comunicação</th>
-              <th style="padding:12px 14px;white-space:nowrap;text-align:center">NPS</th>
-              <th style="padding:12px 14px;white-space:nowrap">Retornaria?</th>
+            <tr>
+              <th>#</th>
+              <th>Data</th>
+              <th>Nome</th>
+              <th>Cargo</th>
+              <th>Departamento</th>
+              <th>Tempo</th>
+              <th>Tipo</th>
+              <th>Principais Motivos</th>
+              <th style="text-align:center">Liderança</th>
+              <th style="text-align:center">Clima</th>
+              <th style="text-align:center">Remun.</th>
+              <th style="text-align:center">Desenv.</th>
+              <th style="text-align:center">Comun.</th>
+              <th style="text-align:center">NPS</th>
+              <th>Retorno</th>
             </tr>
           </thead>
           <tbody id="resp-tbody"></tbody>
         </table>
       </div>
-      <div id="dt-footer" style="padding:12px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--bg)"></div>
+      <div id="dt-footer" style="padding:10px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--bg);background:var(--bg)"></div>
     </div>
   </div>
 </main>
@@ -747,10 +770,10 @@ function tipoLabel(t){
 }
 
 function motivosList(r){
-  var map={motivo_nova_proposta:'Nova proposta',motivo_remuneracao:'Remuneração',motivo_gestor:'Gestor',motivo_clima:'Clima',motivo_crescimento:'Crescimento',motivo_sobrecarga:'Sobrecarga',motivo_reconhecimento:'Reconhecimento',motivo_mudanca_area:'Mudança área',motivo_questoes_pessoais:'Questões pessoais',motivo_condicoes:'Condições'};
+  var map={motivo_nova_proposta:'Nova proposta',motivo_remuneracao:'Remuneração',motivo_gestor:'Gestor',motivo_clima:'Clima',motivo_crescimento:'Crescimento',motivo_sobrecarga:'Sobrecarga',motivo_reconhecimento:'Reconhecimento',motivo_mudanca_area:'Mudança área',motivo_questoes_pessoais:'Pessoais',motivo_condicoes:'Condições'};
   var items=Object.keys(map).filter(k=>r[k]).map(k=>map[k]);
-  if(!items.length)return'<span style="color:var(--muted)">—</span>';
-  return items.map(i=>'<span style="display:inline-block;background:#e8f0fd;color:#1a3a5c;border-radius:20px;padding:2px 8px;font-size:11px;margin:2px 2px;">'+i+'</span>').join('');
+  if(!items.length)return'<span style="color:#b0bec5">—</span>';
+  return items.map(i=>'<span style="display:inline-block;background:#e8f0fd;color:#1a3a5c;border-radius:12px;padding:2px 7px;font-size:10.5px;margin:2px 2px;white-space:nowrap;">'+i+'</span>').join('');
 }
 
 function npsDisplay(nps){
