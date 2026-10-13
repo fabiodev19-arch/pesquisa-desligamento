@@ -1,2 +1,2 @@
 # pesquisa-desligamento
-Formuçario para Pesquisa Simples
+Formulario para Pesquisa Simples
